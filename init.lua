@@ -971,7 +971,7 @@ require('lazy').setup({
     opts = {
       -- add any options here
     },
-    require('numToStr/Comment.nvim').setup {
+    require('Comment').setup {
       toggler = {
         line = 'gcc',
         ---Block-comment toggle keymap
