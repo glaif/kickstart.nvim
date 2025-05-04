@@ -971,6 +971,13 @@ require('lazy').setup({
     opts = {
       -- add any options here
     },
+    require('numToStr/Comment.nvim').setup {
+      toggler = {
+        line = 'gcc',
+        ---Block-comment toggle keymap
+        block = 'gbc',
+      },
+    },
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
