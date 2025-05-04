@@ -364,9 +364,9 @@ require('lazy').setup({
 
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
---        cond = function()
---          return vim.fn.executable 'make' == 1
---        end,
+        --        cond = function()
+        --          return vim.fn.executable 'make' == 1
+        --        end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
@@ -663,7 +663,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
