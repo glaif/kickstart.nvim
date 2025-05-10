@@ -169,6 +169,10 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- [[STEVES NOTE:]] Additional options to stop wrapping lines to windows
+local opt = vim.opt
+opt.wrap = false
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -1035,6 +1039,10 @@ require('lazy').setup({
 
   {
     'sindrets/diffview.nvim',
+  },
+
+  {
+    'github/copilot.vim',
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
