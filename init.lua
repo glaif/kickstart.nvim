@@ -226,6 +226,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Disable Copilot by default
+vim.g.copilot_enabled = false
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -906,7 +909,34 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      signs = false,
+      keywords = {
+        FIXME = {
+          icon = ' ', -- icon used for the sign, and in search results
+          color = '#FF0000', -- can be a hex color, or a named color (see below)
+          alt = { 'FIX', 'BUG', 'FIXIT', 'ISSUE' }, -- a set of other keywords that all map to this FIX keywords
+          -- signs = false, -- configure signs for some keywords individually
+        },
+        TODO = { icon = ' ', color = '#FFFF00' },
+        NOTE = { icon = ' ', color = '#1E90FF', alt = { 'INFO' } },
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)(\([^\)]*\))?:]],
+      },
+      highlight = {
+        before = '', -- "fg" or "bg" or empty
+        keyword = 'fg', -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+        after = '', -- "fg" or "bg" or empty
+        -- pattern = [[.*<((KEYWORDS)%(\(.{-1,}\))?):]],
+        pattern = [[.*((KEYWORDS)(\(.+\))?:)]],
+      },
+    },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -970,6 +1000,7 @@ require('lazy').setup({
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
+
   {
     'numToStr/Comment.nvim',
     config = function()
@@ -1051,6 +1082,15 @@ require('lazy').setup({
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
     dependencies = {
       'tpope/vim-fugitive',
+    },
+  },
+
+  {
+    'yutkat/confirm-quit.nvim',
+    event = 'CmdlineEnter',
+    opts = {
+      overwrite_q_command = true, -- Replaces :q and :qa with :ConfirmQuit and :ConfirmQuitAll
+      quit_message = 'Do you want to quit?', -- Message to show when quitting, can be a function returning a,
     },
   },
 
